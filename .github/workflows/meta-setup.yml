@@ -18,12 +18,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Enable WSL2 on Windows
+      - name: Install WSL Ubuntu
         if: runner.os == 'Windows'
         run: |
-          wsl --install || true
-          wsl --set-default-version 2
-          wsl --list --verbose
+          wsl --install -d Ubuntu-22.04
+          wsl --set-default Ubuntu-22.04
+          # Ensure package lists are updated
+          wsl sudo apt-get update -y
 
       - name: Run Setup Scripts (Linux & macOS)
         if: runner.os != 'Windows'
@@ -37,7 +38,6 @@ jobs:
         if: runner.os == 'Windows'
         run: |
           wsl bash -c "
-            cd /mnt/c/Users/${{ env.USERNAME }}/work/${{ github.repository }}
             bash .github/scripts/setup-rust.sh stable &&
             bash .github/scripts/setup-chain-spec-builder.sh latest &&
             bash .github/scripts/setup-omni-node.sh latest &&
