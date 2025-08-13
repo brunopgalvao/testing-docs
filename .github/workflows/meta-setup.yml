@@ -20,7 +20,7 @@ jobs:
 
       - name: Run Setup Scripts (Linux & macOS)
         run: |
-          bash .github/scripts/setup-rust.sh stable
-          bash .github/scripts/setup-chain-spec-builder.sh latest
-          bash .github/scripts/setup-omni-node.sh latest
+          bash .github/scripts/setup-rust.sh 1.86
+          bash .github/scripts/setup-chain-spec-builder.sh 10.0.0
+          bash .github/scripts/setup-omni-node.sh 0.5.0
           bash .github/scripts/build-parachain.sh stable stable2412
