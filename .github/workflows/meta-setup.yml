@@ -1,0 +1,45 @@
+name: Meta Setup (All-in-One)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  setup-all:
+    name: Setup on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Enable WSL2 on Windows
+        if: runner.os == 'Windows'
+        run: |
+          wsl --install || true
+          wsl --set-default-version 2
+          wsl --list --verbose
+
+      - name: Run Setup Scripts (Linux & macOS)
+        if: runner.os != 'Windows'
+        run: |
+          bash .github/scripts/setup-rust.sh stable
+          bash .github/scripts/setup-chain-spec-builder.sh latest
+          bash .github/scripts/setup-omni-node.sh latest
+          bash .github/scripts/build-parachain.sh stable stable2412
+
+      - name: Run Setup Scripts (Windows via WSL2)
+        if: runner.os == 'Windows'
+        run: |
+          wsl bash -c "
+            cd /mnt/c/Users/${{ env.USERNAME }}/work/${{ github.repository }}
+            bash .github/scripts/setup-rust.sh stable &&
+            bash .github/scripts/setup-chain-spec-builder.sh latest &&
+            bash .github/scripts/setup-omni-node.sh latest &&
+            bash .github/scripts/build-parachain.sh stable stable2412
+          "

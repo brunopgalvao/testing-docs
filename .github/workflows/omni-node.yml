@@ -1,0 +1,12 @@
+name: Setup Omni Node
+
+on:
+  workflow_dispatch:
+
+jobs:
+  omni:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: bash .github/scripts/setup-rust.sh stable
+      - run: bash .github/scripts/setup-omni-node.sh latest
