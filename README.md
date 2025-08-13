@@ -3,7 +3,7 @@ Testing Tutorials and Guides in the Polkadot Docs
 
 ## Polkadot Dev Environment Scripts
 
-Helper scripts for setting up a Polkadot/Substrate dev environment on **Linux**, **macOS**, and **Windows (WSL2)**.
+Helper scripts for setting up a Polkadot/Substrate dev environment on **Linux** and **macOS****.
 
 ### Scripts
 
@@ -16,7 +16,7 @@ Helper scripts for setting up a Polkadot/Substrate dev environment on **Linux**,
 
 ### Workflows
 
-- **Meta Setup** (`meta-setup.yml`) → Runs all scripts on Ubuntu, macOS, WSL2  
+- **Meta Setup** (`meta-setup.yml`) → Runs all scripts on Ubuntu, macOS  
 - **chain-spec-builder.yml** → Only sets up chain-spec-builder  
 - **omni-node.yml** → Only sets up polkadot-omni-node  
 - **parachain.yml** → Builds parachain template  

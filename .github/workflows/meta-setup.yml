@@ -12,34 +12,15 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-latest, macos-latest]
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install WSL Ubuntu
-        if: runner.os == 'Windows'
-        run: |
-          wsl --install -d Ubuntu-22.04
-          wsl --set-default Ubuntu-22.04
-          # Ensure package lists are updated
-          wsl sudo apt-get update -y
-
       - name: Run Setup Scripts (Linux & macOS)
-        if: runner.os != 'Windows'
         run: |
           bash .github/scripts/setup-rust.sh stable
           bash .github/scripts/setup-chain-spec-builder.sh latest
           bash .github/scripts/setup-omni-node.sh latest
           bash .github/scripts/build-parachain.sh stable stable2412
-
-      - name: Run Setup Scripts (Windows via WSL2)
-        if: runner.os == 'Windows'
-        run: |
-          wsl bash -c "
-            bash .github/scripts/setup-rust.sh stable &&
-            bash .github/scripts/setup-chain-spec-builder.sh latest &&
-            bash .github/scripts/setup-omni-node.sh latest &&
-            bash .github/scripts/build-parachain.sh stable stable2412
-          "
