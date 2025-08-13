@@ -13,9 +13,9 @@ if command -v chain-spec-builder &>/dev/null && [[ "$CSB_VERSION" != "latest" ]]
 fi
 
 if [[ "$CSB_VERSION" == "latest" ]]; then
-  cargo install chain-spec-builder
+  cargo install staging-chain-spec-builder
 else
-  cargo install chain-spec-builder --version "$CSB_VERSION"
+  cargo install staging-chain-spec-builder --version "$CSB_VERSION"
 fi
 
 echo "✅ chain-spec-builder $(chain-spec-builder --version) installed."
